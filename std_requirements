@@ -1,0 +1,26 @@
+conda create -y -n std python=3.8.5 pip
+conda activate std
+conda install -y joblib
+conda install -y llvm-openmp #order matters here!
+conda install -y numpy
+conda install -y scipy==1.4.1
+conda install -y jupyter notebook
+conda install -y cython
+conda install -y seaborn
+conda install -y threadpoolctl
+conda install -y scikit-learn statsmodels numba pytables
+conda install -y -c conda-forge python-igraph leidenalg
+conda install -y networkx h5py natsort psutil setuptools-scm
+conda install -y -c conda-forge texttable
+
+pip install scanpy # pip install scanpy==1.5.1
+pip install phenograph
+pip install bhtsne
+pip install fa2
+#manually install magic afterwards
+
+conda install -y -c conda-forge jupyter_contrib_nbextensions
+conda install -y yapf
+
+#new packages
+#pip install py_pcha
