@@ -52,8 +52,8 @@ runMAST <- function(list) {
   #only test the cluster coefficient.
   summary_sca_cort <- summary(zlm_sca_cort, doLRT=TRUE)
   summary_Dt <- summary_sca_cort$datatable
-  fcHurdle_cort <- merge(summary_Dt[contrast=='groupsgroup_0_1_3_4VE' & component=='H',.(primerid, `Pr(>Chisq)`)], 
-                         summary_Dt[contrast=='groupsgroup_0_1_3_4VE' & component=='logFC', .(primerid, coef, ci.hi, ci.lo)], by='primerid') 
+  fcHurdle_cort <- merge(summary_Dt[contrast=='groupsgroup_0_1_3_4_6VE' & component=='H',.(primerid, `Pr(>Chisq)`)], 
+                         summary_Dt[contrast=='groupsgroup_0_1_3_4_6VE' & component=='logFC', .(primerid, coef, ci.hi, ci.lo)], by='primerid') 
   
   fcHurdle_cort <- fcHurdle_cort[,fdr:=p.adjust(`Pr(>Chisq)`, 'fdr')]
   #fcHurdleSig_cort <- fcHurdle_cort[fdr<=0.05 ]
