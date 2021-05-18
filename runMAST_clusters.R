@@ -37,30 +37,29 @@ runMAST <- function(list) {
   
   print("Make scaRaw Obj..")
   scaRaw <- FromMatrix(exprsArray = t(expr_matrix), cData = cdata, fData = fdata)
-  sca_cort = scaRaw
   
   # calculate cellular detection rate
-  cdr2 <-colSums(assay(sca_cort)>0)
-  colData(sca_cort)$cngeneson <- scale(cdr2)
-  cond<-factor(colData(sca_cort)$groups)
+  cdr2 <-colSums(assay(scaRaw)>0)
+  colData(scaRaw)$cngeneson <- scale(cdr2)
+  cond<-factor(colData(scaRaw)$groups)
   cond<-relevel(cond,"group_restCTRL")
-  colData(sca_cort)$groups<-cond
+  colData(scaRaw)$groups<-cond
   
   print("Carrying out DE analysis..")
-  zlm_sca_cort <- zlm(~groups + cngeneson, sca_cort)
+  zlm_sca <- zlm(~groups + cngeneson, scaRaw)
   
   #only test the cluster coefficient.
-  summary_sca_cort <- summary(zlm_sca_cort, doLRT=TRUE)
-  summary_Dt <- summary_sca_cort$datatable
-  fcHurdle_cort <- merge(summary_Dt[contrast=='groupsgroup_0_1_3_4_6VE' & component=='H',.(primerid, `Pr(>Chisq)`)], 
-                         summary_Dt[contrast=='groupsgroup_0_1_3_4_6VE' & component=='logFC', .(primerid, coef, ci.hi, ci.lo)], by='primerid') 
+  summary_sca <- summary(zlm_sca, doLRT=TRUE)
+  summary_Dt <- summary_sca$datatable
+  fcHurdle <- merge(summary_Dt[contrast=='groupsgroup_3VE' & component=='H',.(primerid, `Pr(>Chisq)`)], 
+                         summary_Dt[contrast=='groupsgroup_3VE' & component=='logFC', .(primerid, coef, ci.hi, ci.lo)], by='primerid') 
   
-  fcHurdle_cort <- fcHurdle_cort[,fdr:=p.adjust(`Pr(>Chisq)`, 'fdr')]
-  #fcHurdleSig_cort <- fcHurdle_cort[fdr<=0.05 ]
-  setorder(fcHurdle_cort, fdr)
+  fcHurdle <- fcHurdle[,fdr:=p.adjust(`Pr(>Chisq)`, 'fdr')]
+  #fcHurdleSig_cort <- fcHurdle[fdr<=0.05 ]
+  setorder(fcHurdle, fdr)
   
   
-  return( list("DEresults_cort" = fcHurdle_cort))
+  return( list("DEresults" = fcHurdle))
 }
 
 saveResult <- function(result, filename) {
@@ -76,11 +75,10 @@ saveResult <- function(result, filename) {
 }
 
 
-testMAST <- function(exp_filename, cdata_filename, save_filename_cort,save_filename_bs) {
+testMAST <- function(exp_filename, cdata_filename, save_filename,save_filename_bs) {
   mylist <- loadData(exp_filename, cdata_filename)
   result <- runMAST(mylist)
-  saveResult(result$DEresults_cort, save_filename_cort)
-  #saveResult(result$DEresults_bs, save_filename_bs)
+  saveResult(result$DEresults, save_filename)
 }
 
 # args should be:

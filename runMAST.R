@@ -85,7 +85,6 @@ runMAST <- function(list) {
   fcHurdle_bs[,fdr:=p.adjust(`Pr(>Chisq)`, 'fdr')]
   fcHurdleSig_bs <- fcHurdle_bs[fdr<=0.05 ]
   print(dim(fcHurdleSig_bs))
-  #fcHurdleSig_bs <- merge(fcHurdle_bs[fdr<.05 & abs(coef)>FCTHRESHOLD], as.data.table(mcols(sca_bs)), by='primerid')
   setorder(fcHurdleSig_bs, fdr)
   
   return( list("DEresults_cort" = fcHurdleSig_cort, "DEresults_bs" = fcHurdleSig_bs))
