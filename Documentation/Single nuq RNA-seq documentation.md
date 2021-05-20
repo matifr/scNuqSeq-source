@@ -20,7 +20,15 @@
 
 8. runMAST_condition.R
 
-9. 
+
+
+## <mark>General notes</mark>
+
+**Pathway analysis** is based on the genes with FDR <0.05 and Log2FC more or less that 0.01
+
+**DEA** numbers are based on FDR <= 0.05 and Log2FC more or less than 0.5
+
+
 
 ## 1. My_initial_analysis_high_var
 
@@ -46,8 +54,6 @@ This is the script where I identify the different broad clusters based on base m
 
 **Output**: `adata_final_high_var_broad_types`
 
-
-
 For each broad cluster, I subcluster into its cell types    
 
 - <mark>Immune cells/Microglia:</mark> **Output**: `adata_final_high_var_immune_cells`
@@ -56,13 +62,9 @@ For each broad cluster, I subcluster into its cell types    
 
 - <mark>Neurons</mark> **Output**: `adata_final_high_var_neuron_cells`
 
-
-
 Final cluster that has all the information in one AnnData
 
 `adata_final_high_var_final_clusters_updated`
-
-
 
 ## 3. Microglia_subcluster
 
@@ -74,8 +76,6 @@ Final cluster that has all the information in one AnnData
 
 - Excludes F131A and reclusters the rest of microlgia and **Output**:`adata_high_var_Microglia_ONLY_clusters`
 
-
-
 ### 3a. Microglia_subcluster_BS
 
 **Input**:`adata_high_var_Microglia_ONLY_clusters`
@@ -83,23 +83,3 @@ Final cluster that has all the information in one AnnData
 This script subclusters the <mark>brainstem</mark> microlgia, does all the preprocessing, nornalization and clustering. Conducts DEA, heatmaps for the specific microglia subsets i.e. APOE high/low
 
 - **Output**:`adata_high_var_Microglia_Brainstem_clusters`
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
