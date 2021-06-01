@@ -51,8 +51,8 @@ runMAST <- function(list) {
   #only test the cluster coefficient.
   summary_sca <- summary(zlm_sca, doLRT=TRUE)
   summary_Dt <- summary_sca$datatable
-  fcHurdle <- merge(summary_Dt[contrast=='groupsgroup_3VE' & component=='H',.(primerid, `Pr(>Chisq)`)], 
-                         summary_Dt[contrast=='groupsgroup_3VE' & component=='logFC', .(primerid, coef, ci.hi, ci.lo)], by='primerid') 
+  fcHurdle <- merge(summary_Dt[contrast=='groupsgroup_2VE' & component=='H',.(primerid, `Pr(>Chisq)`)], 
+                         summary_Dt[contrast=='groupsgroup_2VE' & component=='logFC', .(primerid, coef, ci.hi, ci.lo)], by='primerid') 
   
   fcHurdle <- fcHurdle[,fdr:=p.adjust(`Pr(>Chisq)`, 'fdr')]
   #fcHurdleSig_cort <- fcHurdle[fdr<=0.05 ]
